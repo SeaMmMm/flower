@@ -8,17 +8,16 @@
 #     └── coco  ← downloads here (20.1 GB)
 
 # Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
-path: /Users/smc/Downloads/flower # dataset root dir
+path: /Users/smc/Downloads/毕设/flower # dataset root dir
 train: datasets/flower/images/train # train images (relative to 'path') 118287 images
 val: datasets/flower/images/val # val images (relative to 'path') 5000 images
 test: datasets/flower/images/val # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
 # Classes
 names:
-  0: a
+  0: WT
   1: T1-C5-C1
   2: T1-C5-E5
-  3: WT
 
 
 # Download script/URL (optional)
