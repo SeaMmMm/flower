@@ -30,7 +30,7 @@ import os
 import cv2
 
 # Load a model
-model = YOLO("runs/detect/train5/weights/best.pt")  # pretrained YOLOv8n model
+model = YOLO("runs/detect/train6/weights/best.pt")  # pretrained YOLOv8n model
 
 # Define colors for each class
 class_names = ["WT", "T1-C5-C1", "T1-C5-E5"]  # 类别名称
