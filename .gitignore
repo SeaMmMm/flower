@@ -42,7 +42,10 @@ MANIFEST
 *.tar.gz
 *.tgz
 *.bz2
-
+*.jpg
+*.tif
+*.txt
+*.png
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt

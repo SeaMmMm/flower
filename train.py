@@ -26,7 +26,7 @@ model = YOLO("yolov8x.pt")  # load a pretrained model (recommended for training)
 apply_hyperparameters(model, hyp)
 
 # Train the model
-results = model.train(data="flower.yaml", epochs=100, imgsz=640, batch=2)
+results = model.train(data="flower.yaml", epochs=100, imgsz=1024, batch=1)
 
 
 # Load a model

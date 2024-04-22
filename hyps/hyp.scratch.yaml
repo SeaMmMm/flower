@@ -1,31 +1,31 @@
-# hyp.small_dataset.yaml
-lr0: 0.01  # initial learning rate
-lrf: 0.2  # final learning rate
-momentum: 0.937  # SGD momentum
-weight_decay: 0.0005  # optimizer weight decay
-warmup_epochs: 3.0  # warmup epochs
-warmup_momentum: 0.8  # warmup momentum
-warmup_bias_lr: 0.1  # warmup bias lr
-box: 0.05  # box loss gain
-cls: 0.5  # cls loss gain
-cls_pw: 1.0  # cls BCELoss positive_weight
-obj: 1.0  # obj loss gain (scale with pixels)
-obj_pw: 1.0  # obj BCELoss positive_weight
-iou_t: 0.20  # IoU training threshold
-anchor_t: 4.0  # anchor-multiple threshold
-# Data augmentation
-mosaic: 1.0  # use mosaic augmentation to simulate diverse scenes
-mixup: 0.4  # mixup augmentation to generate hybrid images
-hsv_h: 0.1  # hue adjustment
-hsv_s: 0.7  # saturation adjustment
-hsv_v: 0.4  # value adjustment
-degrees: 20.0  # image rotation (+/- deg)
-translate: 0.1  # image translation (+/- fraction)
-scale: 0.5  # image scale (+/- gain)
-shear: 10.0  # image shear (+/- deg)
-perspective: 0.0  # image perspective (not recommended for small datasets)
-flipud: 0.5  # image flip up-down (probability)
-fliplr: 0.5  # image flip left-right (probability)
-mosaic_scale: (0.5, 1.5)  # mosaic scale
-mixup_scale: (0.5, 1.5)  # mixup scale
-copy_paste: 0.0  # copy-paste augmentation (not recommended for small datasets)
+lr0: 0.009  # 初始学习率，保持不变以确保稳定训练
+lrf: 0.2  # 最终学习率，保持不变
+momentum: 0.937  # SGD动量，保持不变
+weight_decay: 0.0005  # 优化器权重衰减，保持不变
+warmup_epochs: 2.0  # 热身周期，略微降低以适应小数据集
+warmup_momentum: 0.8  # 热身动量，保持不变
+warmup_bias_lr: 0.2  # 热身偏置学习率，增加以快速调整偏置
+box: 0.05  # 目标框损失增益，考虑略微增加到 0.06 提高位置精度
+cls: 0.5  # 分类损失增益，保持不变
+cls_pw: 1.0  # 分类BCELoss正权重，保持不变
+obj: 1.0  # 目标损失增益（与像素缩放），保持不变
+obj_pw: 1.0  # 目标BCELoss正权重，保持不变
+iou_t: 0.25  # 训练IoU阈值提高，以提升对正样本的精确度要求
+anchor_t: 4.0  # 锚点倍数阈值，保持不变
+# 数据增强
+mosaic: 1.0  # 使用马赛克增强模拟多样场景，保持不变
+mixup: 0.5  # 使用混合增强生成混合图像提高，以增加样本多样性
+hsv_h: 0.3  # 色调调整，保持不变
+hsv_s: 0.9  # 饱和度调整，保持不变
+hsv_v: 0.6  # 明度调整，保持不变
+degrees: 45  # 图像旋转（+/-度），降低以减少极端旋转导致的漏检
+translate: 0.3  # 图像平移（+/-比例），略微增加以改善对边缘目标的检测
+scale: 0.5  # 图像缩放（+/-增益），保持不变
+shear: 20  # 图像剪切（+/-度），保持不变
+perspective: 0.1  # 图像透视，增加以提高对不同视角目标的鲁棒性
+flipud: 0.5  # 图像上下翻转（概率），保持不变
+fliplr: 0.76  # 图像左右翻转（概率），保持不变
+mosaic_scale: (0.5, 1.5)  # 马赛克缩放，保持不变
+mixup_scale: (0.5, 1.5)  # 混合缩放，保持不变
+copy_paste: 0.5  # 使用复制粘贴增强，略微提高以增加背景多样性
+erasing: 0.5  # 使用随机擦除增强，保持不变
