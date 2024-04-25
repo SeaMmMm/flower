@@ -26,18 +26,18 @@ def flip_image_and_boxes(image, boxes):
     flipped_image = cv2.flip(image, 1)
     new_boxes = boxes.copy()
     for i in range(len(boxes)):
-        new_boxes[i][1] = 1 - boxes[i][1]  # Flip x_center
+        new_boxes[i][1] = 1 - boxes[i][1]  # 翻转 x_center
     return flipped_image, new_boxes
 
 
 def is_box_inside_image(box, img_width, img_height):
     _, x_center, y_center, width, height = box
-    # Convert to absolute coordinates for easier boundary checking
+    # 转换为绝对坐标以便更容易进行边界检查
     x1 = max(min((x_center - width / 2), 1.0), 0)
     y1 = max(min((y_center - height / 2), 1.0), 0)
     x2 = max(min((x_center + width / 2), 1.0), 0)
     y2 = max(min((y_center + height / 2), 1.0), 0)
-    # A box is considered inside if it has a non-zero area
+    # 如果框具有非零面积，则认为框在图像内部
     return (x2 > x1) and (y2 > y1)
 
 
@@ -45,12 +45,12 @@ def adjust_and_filter_boxes(boxes, crop_x, crop_y, crop_w, crop_h, orig_w, orig_
     new_boxes = []
     for box in boxes:
         class_label, x_center, y_center, width, height = box
-        # Adjust coordinates to cropped area
+        # 调整坐标到裁剪区域
         x_center = (x_center * orig_w - crop_x) / crop_w
         y_center = (y_center * orig_h - crop_y) / crop_h
         width /= crop_w / orig_w
         height /= crop_h / orig_h
-        # Check if the adjusted box is inside the cropped image
+        # 检查调整后的框是否在裁剪后的图像内部
         if is_box_inside_image([class_label, x_center, y_center, width, height], 1, 1):
             new_boxes.append([class_label, x_center, y_center, width, height])
     return np.array(new_boxes, dtype=np.float32)
@@ -69,14 +69,14 @@ def random_crop(image, boxes):
     return cropped_image, new_boxes
 
 
-# Set up paths
+# 设置路径
 dataset_base = "datasets/flower"
 images_dir = Path(dataset_base) / "images/train"
 labels_dir = Path(dataset_base) / "labels/train"
 aug_images_dir = Path(dataset_base) / "images/train_aug"
 aug_labels_dir = Path(dataset_base) / "labels/train_aug"
 
-# Create directories for augmented images and labels
+# 创建用于增强图像和标签的目录
 aug_images_dir.mkdir(parents=True, exist_ok=True)
 aug_labels_dir.mkdir(parents=True, exist_ok=True)
 
@@ -85,18 +85,18 @@ for image_path in images_dir.glob("*.jpg"):
     ann_path = labels_dir / (image_path.stem + ".txt")
     boxes = load_annotation(ann_path)
 
-    # Apply random crop augmentation
+    # 应用随机裁剪增强
     cropped_image, cropped_boxes = random_crop(image, boxes)
     aug_image_path = aug_images_dir / (image_path.stem + "_cropped.jpg")
     aug_ann_path = aug_labels_dir / (image_path.stem + "_cropped.txt")
     cv2.imwrite(str(aug_image_path), cropped_image)
     save_annotation(aug_ann_path, cropped_boxes)
 
-    # Apply flip augmentation
+    # 应用翻转增强
     flipped_image, flipped_boxes = flip_image_and_boxes(image, boxes)
     aug_image_path = aug_images_dir / (image_path.stem + "_flipped.jpg")
     aug_ann_path = aug_labels_dir / (image_path.stem + "_flipped.txt")
     cv2.imwrite(str(aug_image_path), flipped_image)
     save_annotation(aug_ann_path, flipped_boxes)
 
-    print(f"Processed {image_path.name}")
+    print(f"处理完成 {image_path.name}")
